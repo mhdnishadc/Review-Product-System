@@ -1,4 +1,3 @@
-# models.py
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
@@ -23,12 +22,12 @@ class Product(models.Model):
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
-    rating = models.IntegerField()  # you can enforce 1-5 in validation
+    rating = models.IntegerField()  
     feedback = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ['user', 'product']  # ✅ Prevent duplicate reviews
+        unique_together = ['user', 'product'] 
 
     def __str__(self):
         return f"{self.user.username} → {self.product.name}"
@@ -39,7 +38,7 @@ class User(AbstractUser):
         ('user', 'User'),
     )
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
-    password = models.CharField(max_length=128, default="123456admin")  # Use Django's built-in password hashing
-    username = models.CharField(max_length=150, default="admin", unique=True)  # Ensure username is unique
+    password = models.CharField(max_length=128, default="123456admin")  
+    username = models.CharField(max_length=150, default="admin", unique=True)  
     def __str__(self):
         return self.username

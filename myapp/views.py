@@ -25,7 +25,8 @@ class ProductCreateView(generics.CreateAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    lookup_field = 'id'  # use 'pk' if you're using default
+    lookup_field = 'id'  
+
     
     def get_permissions(self):
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
@@ -35,7 +36,7 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ProductListView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    pagination_class = None  # Disable pagination if not needed
+    pagination_class = None  
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -50,7 +51,7 @@ class LoginView(APIView):
             user = authenticate(request, username=username, password=password)
 
             if user is not None:
-                login(request, user)  # <-- This sets the session cookie!
+                login(request, user)  
                 return Response({
                     "message": "Login successful",
                     "username": user.username,
@@ -74,4 +75,4 @@ class IsRegularUser(permissions.BasePermission):
 class ReviewCreateView(generics.CreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [IsRegularUser]  # ✅ Only regular users can submit
+    permission_classes = [IsRegularUser]  
